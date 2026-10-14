@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      background-color: #050505;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden; 
+    }
+    .button{
+      margin-bottom: 30px;
+      padding: 10px 25px;
+      font-size: 18px;
+      cursor: pointer;
+      background: #222;
+      color: white;
+      border: 2px solid #555;
+      border-radius: 5px;
+      z-index: 100;
+    }
+    .btn-toggle:active { transform: scale(0.95); }
+
+    .container {
+      perspective: 1000000px;
+    }
+
+    .pyramid {
+      width: 400px;
+      height: 3px; 
+      position: relative;
+      transform-style: preserve-3d;
+      animation: spin 8s linear infinite;
+    }
+
+    .side {
+      position: absolute;
+      width: 400px;
+      height: 346.4px;
+      clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+      opacity: 0.9;
+      transform-origin: 50% 100%;
+      filter: drop-shadow(0 0 15px currentColor);
+    }
+    .active .side {
+      animation: colorwheel 10s linear infinite;
+    }
+
+    .front  { background-color:red;
+    transform: rotateY(0deg) translateZ(115.4px) rotateX(19.5deg); }
+    .left   { background-color:green;transform: rotateY(120deg) translateZ(115.4px) rotateX(19.5deg); }
+    .right  { background-color:blue; transform: rotateY(240deg) translateZ(115.4px) rotateX(19.5deg); }
+    .bottom { background-color:aqua;transform: rotateX(90deg) translateY(115.4px); }
+
+    @keyframes spin {
+      from { transform: rotateX(0deg) rotateY(0deg); }
+      to { transform: rotateX(0deg) rotateY(360deg); }
+    }
+
+    @keyframes colorwheel {
+      0%   { background-color: hsl(0, 100%, 50%); }
+      25%  { background-color: hsl(90, 100%, 50%); }
+      50%  { background-color: hsl(180, 100%, 50%); }
+      75%  { background-color: hsl(270, 100%, 50%); }
+      100% { background-color: hsl(360, 100%, 50%); }
+    }
+  </style>
+</head>
+<body>
+
+  <button class="button" onclick="toggleColor()">Color Animation: OFF</button>
+
+  <div class="container" id="mainContainer">
+    <div class="pyramid">
+      <div class="side front"></div>
+      <div class="side left"></div>
+      <div class="side right"></div>
+      <div class="side bottom"></div>
+    </div>
+  </div>
+
+  <script>
+    function toggleColor() {
+      const container = document.getElementById('mainContainer');
+      const btn = document.querySelector('.button');
+      container.classList.toggle('active');
+      if (container.classList.contains('active')) {
+        btn.innerText = "Color Animation: ON";
+        btn.style.borderColor = "#00ff00";
+      } else {
+        btn.innerText = "Color Animation: OFF";
+        btn.style.borderColor = "#555";
+      }
+    }
+  </script>
+
+</body>
+</html>
